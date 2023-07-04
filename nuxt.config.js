@@ -1,6 +1,7 @@
 module.exports = {
   server: {
     port: 3000, // default: 3000
+    host: '0.0.0.0',
   },
 
   head: {
@@ -31,15 +32,16 @@ module.exports = {
 
   modules: [
     '@nuxtjs/axios', //引入axios模块
+    '@nuxtjs/proxy'
   ],
 
   env: {
-    BASE_API: 'http://localhost',
+    BASE_API: 'http://192.168.1.6',
   },
 
   axios: {
     // Axios options here
-    baseURL: 'http://localhost',
+    baseURL: 'http://192.168.1.6',
   },
 
   plugins: [
