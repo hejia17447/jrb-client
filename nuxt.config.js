@@ -36,12 +36,12 @@ module.exports = {
   ],
 
   env: {
-    BASE_API: 'http://192.168.1.6',
+    BASE_API: 'http://localhost',
   },
 
   axios: {
     // Axios options here
-    baseURL: 'http://192.168.1.6',
+    baseURL: 'http://localhost',
   },
 
   plugins: [
