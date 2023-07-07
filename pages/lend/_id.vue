@@ -40,11 +40,8 @@
             <li class="colspan" style="line-height: 60px;">
               <span class="c-888 fl">投标进度：</span>
               <div class="progress-bar fl" style="margin-top:26px;">
-                <span
-                  :style="
-                    'width:' + (lend.investAmount / lend.amount) * 100 + '%'
-                  "
-                ></span>
+                <span :style="'width:' + (lend.investAmount / lend.amount) * 100 + '%'
+                  "></span>
               </div>
               <span class="c-orange">
                 {{ (lend.investAmount / lend.amount) * 100 }}%
@@ -63,11 +60,7 @@
         <div class="data" style="width: auto;">
           <el-form :inline="true" class="demo-form-inline">
             <el-form-item label="投资金额">
-              <el-input
-                v-model="invest.investAmount"
-                :disabled="lend.status != 1"
-                @blur="getInterestCount()"
-              >
+              <el-input v-model="invest.investAmount" :disabled="lend.status != 1" @blur="getInterestCount()">
                 <template slot="append">元</template>
               </el-input>
             </el-form-item>
@@ -80,11 +73,7 @@
               <span class="orange">
                 <a href="#">《出借协议》</a>
               </span>
-              <el-button
-                type="warning"
-                @click="commitInvest"
-                :disabled="!agree"
-              >
+              <el-button type="warning" @click="commitInvest" :disabled="!agree">
                 立即投资
               </el-button>
             </el-form-item>
@@ -209,10 +198,7 @@
                 </tr>
               </thead>
               <tbody id="repayment_content">
-                <tr
-                  v-for="lendItemReturn in lendItemReturnList"
-                  :key="lendItemReturn.id"
-                >
+                <tr v-for="lendItemReturn in lendItemReturnList" :key="lendItemReturn.id">
                   <td>{{ lendItemReturn.currentPeriod }}</td>
                   <td class="c-orange">￥{{ lendItemReturn.principal }}</td>
                   <td class="c-orange">￥{{ lendItemReturn.interest }}</td>
@@ -351,8 +337,7 @@
               <dd>
                 <div class="text">
                   <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;">
-                    调查：风控部对借款人各项信息进行了全面的电话征信，一切资料真实可靠。<span
-                    ></span>
+                    调查：风控部对借款人各项信息进行了全面的电话征信，一切资料真实可靠。<span></span>
                   </p>
                   <p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;">
                     抵押物：全款长安福特福克斯汽车，车牌号：川<span>AYY***</span>，新车购买于<span>2013</span>年，裸车价<span>14</span>万，评估价<span>5</span>万。
@@ -423,6 +408,7 @@ export default {
       },
       interestCount: 0, //将获得收益
       userType: 0, //用户类型
+      lendItemReturnList: [], //回款计划
     }
   },
 
@@ -433,6 +419,9 @@ export default {
 
     //判断登录人的用户类型
     this.fetchUserType()
+
+    //回款计划
+    this.fetchLendItemReturnList()
   },
 
   methods: {
@@ -538,6 +527,14 @@ export default {
           },
         }
       )
+    },
+    //回款计划
+    fetchLendItemReturnList() {
+      this.$axios
+        .$get('/api/core/lendItemReturn/auth/list/' + this.$route.params.id)
+        .then((response) => {
+          this.lendItemReturnList = response.data.list
+        })
     },
   },
 }
