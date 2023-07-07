@@ -400,11 +400,16 @@ export default {
     let responseLendItemList = await $axios.$get(
       '/api/core/lendItem/list/' + lendId
     )
+    //还款计划
+    let responseLendReturnList = await $axios.$get(
+      '/api/core/lendReturn/list/' + lendId
+    )
 
     return {
       lend: response.data.lendDetail.lend, // 标的详情
       borrower: response.data.lendDetail.borrower, // 借款人信息
       lendItemList: responseLendItemList.data.list, // 投资记录
+      lendReturnList: responseLendReturnList.data.list, //还款计划
     }
   },
 
